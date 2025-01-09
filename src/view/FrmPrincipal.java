@@ -1,6 +1,7 @@
 package view;
 
 import controller.Conexion;
+import controller.CtrlPanEntrar;
 
 import java.awt.*;
 
@@ -37,6 +38,8 @@ public class FrmPrincipal extends JFrame {
 
 		mnBar = new MenuBar(this, panDetalle, panEntrar, panResumen, conn);
 		setJMenuBar(mnBar.mnBar());
+
+
 
 		contentPane.add(panEntrar, BorderLayout.CENTER);
 
