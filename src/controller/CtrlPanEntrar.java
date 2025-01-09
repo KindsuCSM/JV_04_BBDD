@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 public class CtrlPanEntrar {
+    private String usuario;
+	private String contrasenia;
+
 	public boolean accesoUsuario(Conexion conn, String usuario, String contrasenia) {
 		String sql = "SELECT * FROM alumn WHERE user = ? AND password = ?";
 
@@ -17,6 +20,8 @@ public class CtrlPanEntrar {
 			ResultSet rs = ps.executeQuery();
 
 			if(rs.next()) {
+                this.usuario = usuario;
+				this.contrasenia = contrasenia;
 				System.out.println("Inicio de sesión correcta");
 				return true;
 			}else {
@@ -29,5 +34,13 @@ public class CtrlPanEntrar {
 			System.out.println("Error inicio sesión: " + e.getMessage());
 			return false;
 		}
+	}
+
+    	public String getUsuario() {
+		return usuario;
+	}
+
+	public String getContrasenia() {
+		return contrasenia;
 	}
 }
