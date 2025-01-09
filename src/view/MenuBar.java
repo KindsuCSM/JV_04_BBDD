@@ -14,12 +14,14 @@ public class MenuBar implements ActionListener {
 	private JMenuItem itmEntrar, itmSalir, itmDetalle, itmResumen;
 	private FrmPrincipal frmPrincipal;
 	private JPanel panDetalle, panEntrar, panResumen;
+	private Conexion con;
 
-	public MenuBar(FrmPrincipal frmPrincipal, PanDetalle panDetalle, PanEntrar panEntrar, PanResumen panResumen) {
+	public MenuBar(FrmPrincipal frmPrincipal, PanDetalle panDetalle, PanEntrar panEntrar, PanResumen panResumen, Conexion con) {
 		this.frmPrincipal = frmPrincipal;
 		this.panDetalle = panDetalle;
 		this.panEntrar = panEntrar;
 		this.panResumen = panResumen;
+		this.con = con;
 	}
 
 	public JMenuBar mnBar() {
@@ -75,10 +77,9 @@ public class MenuBar implements ActionListener {
         } else if (e.getSource() == itmSalir) {
 			int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea salir?", "Salir", JOptionPane.YES_NO_OPTION);
 			if(respuesta == JOptionPane.YES_OPTION) {
-				frmPrincipal.getConn().desconectar();
+				con.desconectar();
 				System.exit(0);
 			}
 		}
-
 	}
 }

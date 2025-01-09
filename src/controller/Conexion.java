@@ -34,4 +34,8 @@ public class Conexion {
 			System.out.println("Error desconexión: " + e.getMessage());
 		}
 	}
+
+	public Connection getConnection() {
+		return conn;
+	}
 }
