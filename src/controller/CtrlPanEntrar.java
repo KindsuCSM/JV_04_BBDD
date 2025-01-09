@@ -27,7 +27,7 @@ public class CtrlPanEntrar {
 			if(rs.next()) {
 				this.usuario = user;
 				this.contrasenia = pass;
-				JOptionPane.showMessageDialog(null, "Bienvenido, Sesion Iniciada.", "Inicio Correcto", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Bienvenido " + user + ", sesion iniciada!", "Inicio Correcto", JOptionPane.INFORMATION_MESSAGE);
 				activarBotones(frmPrincipal);
 				return true;
 			}else {
@@ -54,6 +54,5 @@ public class CtrlPanEntrar {
 
 	public void activarBotones(FrmPrincipal frmPrincipal) {
 		frmPrincipal.activarBotones();
-
 	}
 }
