@@ -33,7 +33,7 @@ public class FrmPrincipal extends JFrame {
 
 		panDetalle = new PanDetalle();
 		panEntrar = new PanEntrar(conn);
-		panResumen = new PanResumen();
+		panResumen = new PanResumen(conn);
 
 		mnBar = new MenuBar(this, panDetalle, panEntrar, panResumen, conn);
 		setJMenuBar(mnBar.mnBar());
