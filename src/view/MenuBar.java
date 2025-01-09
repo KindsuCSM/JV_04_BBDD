@@ -1,13 +1,12 @@
 package view;
 
+import controller.Conexion;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class MenuBar implements ActionListener {
 	private JMenuBar menuBar;
@@ -73,7 +72,13 @@ public class MenuBar implements ActionListener {
         } else if (e.getSource() == itmResumen) {
         	cambiarPanel(panResumen);
         	frmPrincipal.setTitle("Resumen");
-        }
+        } else if (e.getSource() == itmSalir) {
+			int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea salir?", "Salir", JOptionPane.YES_NO_OPTION);
+			if(respuesta == JOptionPane.YES_OPTION) {
+				frmPrincipal.getConn().desconectar();
+				System.exit(0);
+			}
+		}
 
 	}
 }

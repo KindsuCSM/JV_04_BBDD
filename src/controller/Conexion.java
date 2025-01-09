@@ -26,11 +26,12 @@ public class Conexion {
 
 	public void desconectar() {
 		try {
-			conn.close();
-			System.out.println("La conexión se ha cerrado con éxito");
+			if(conn != null && !conn.isClosed()) {
+				conn.close();
+				System.out.println("La conexión se ha cerrado con éxito");
+			}
 		} catch (SQLException e) {
 			System.out.println("Error desconexión: " + e.getMessage());
-			e.printStackTrace();
 		}
 	}
 }
