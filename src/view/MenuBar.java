@@ -14,6 +14,14 @@ public class MenuBar implements ActionListener {
 	private JMenu mnValidar, mnVisualizar, mnAcercaDe;
 	private JMenuItem itmEntrar, itmSalir, itmDetalle, itmResumen;
 	private FrmPrincipal frmPrincipal;
+	private JPanel panDetalle, panEntrar, panResumen;
+
+	public MenuBar(FrmPrincipal frmPrincipal, PanDetalle panDetalle, PanEntrar panEntrar, PanResumen panResumen) {
+		this.frmPrincipal = frmPrincipal;
+		this.panDetalle = panDetalle;
+		this.panEntrar = panEntrar;
+		this.panResumen = panResumen;
+	}
 
 	public JMenuBar mnBar() {
 		menuBar = new JMenuBar();
@@ -56,12 +64,16 @@ public class MenuBar implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		/*if (e.getSource() == itemPrincipal) {
-            cambiarPanel(panPrincipal);
-            frmPrincipal.setTitle("Menu principal");
-        } else if (e.getSource() == itemAgregarCuentaAhorro) {
-            cambiarPanel(panAddCA);
-            frmPrincipal.setTitle("Agregar cuenta de ahorros");*/
+		if (e.getSource() == itmEntrar) {
+            cambiarPanel(panEntrar);
+            frmPrincipal.setTitle("Entrar");
+        } else if (e.getSource() == itmDetalle) {
+            cambiarPanel(panDetalle);
+            frmPrincipal.setTitle("Detalle");
+        } else if (e.getSource() == itmResumen) {
+        	cambiarPanel(panResumen);
+        	frmPrincipal.setTitle("Resumen");
+        }
 
 	}
 }
