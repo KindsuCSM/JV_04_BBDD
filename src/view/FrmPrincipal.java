@@ -11,13 +11,15 @@ import javax.swing.border.EmptyBorder;
 
 public class FrmPrincipal extends JFrame {
 
-	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
-	private PanDetalle panDetalle;
-	private PanEntrar panEntrar;
-	private PanResumen panResumen;
-	private MenuBar mnBar;
-	private Conexion conn;
+
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+    private PanDetalle panDetalle;
+    private PanEntrar panEntrar;
+    private PanResumen panResumen;
+    private PanAcercaDe panAcercaDe;
+    private MenuBar mnBar;
+	Conexion conn;
 
 	public FrmPrincipal() {
 		conn = new Conexion();
@@ -32,14 +34,15 @@ public class FrmPrincipal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
+
 		panDetalle = new PanDetalle();
 		panEntrar = new PanEntrar(conn);
 		panResumen = new PanResumen(conn);
+        panAcercaDe = new PanAcercaDe();
 
-		mnBar = new MenuBar(this, panDetalle, panEntrar, panResumen, conn);
-		setJMenuBar(mnBar.mnBar());
+        mnBar = new MenuBar(this, panDetalle, panEntrar, panResumen, panAcercaDe, conn);
 
-
+        setJMenuBar(mnBar.mnBar());
 
 		contentPane.add(panEntrar, BorderLayout.CENTER);
 
@@ -52,5 +55,9 @@ public class FrmPrincipal extends JFrame {
         });
 
 		setVisible(true);
+	}
+
+	public void activarBotones() {
+		mnBar.activarBotones();
 	}
 }
