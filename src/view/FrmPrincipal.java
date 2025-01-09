@@ -56,4 +56,8 @@ public class FrmPrincipal extends JFrame {
 
 		setVisible(true);
 	}
+
+	public void activarBotones() {
+		mnBar.activarBotones();
+	}
 }

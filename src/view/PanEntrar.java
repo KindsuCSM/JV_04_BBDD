@@ -1,15 +1,11 @@
 package view;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import controller.Conexion;
 import controller.CtrlPanEntrar;
 
 import java.awt.Font;
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
 
 public class PanEntrar extends JPanel {
 
@@ -67,7 +63,8 @@ public class PanEntrar extends JPanel {
 			String contrasenia = new String(pwdContrasenia.getPassword());
 
 			ctrlPanelEntrar = new CtrlPanEntrar();
-			ctrlPanelEntrar.accesoUsuario(conexion, user, contrasenia);
+			ctrlPanelEntrar.accesoUsuario(conexion, user, contrasenia, (FrmPrincipal) SwingUtilities.getWindowAncestor(this));
+
 		});
 	}
 

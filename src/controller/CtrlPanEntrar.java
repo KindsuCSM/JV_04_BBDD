@@ -1,17 +1,21 @@
 package controller;
 
+import view.FrmPrincipal;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 public class CtrlPanEntrar {
 	private String usuario;
 	private String contrasenia;
+	private FrmPrincipal frmPrincipal;
 
 
-	public boolean accesoUsuario(Conexion conn, String user, String pass) {
+
+	public boolean accesoUsuario(Conexion conn, String user, String pass, FrmPrincipal frmPrincipal) {
 		String sql = "SELECT * FROM alumn WHERE user = ? AND password = ?";
 
 		try {
@@ -23,8 +27,8 @@ public class CtrlPanEntrar {
 			if(rs.next()) {
 				this.usuario = user;
 				this.contrasenia = pass;
-				System.out.println("Inicio de sesión correcta");
-				//Activar Botones
+				JOptionPane.showMessageDialog(null, "Bienvenido, Sesion Iniciada.", "Inicio Correcto", JOptionPane.INFORMATION_MESSAGE);
+				activarBotones(frmPrincipal);
 				return true;
 			}else {
 				JOptionPane.showMessageDialog(null, "Usuario o contraseña no válidos.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -46,5 +50,10 @@ public class CtrlPanEntrar {
 	public String getContrasenia() {
 		System.out.println("Contraseña actual: " + contrasenia);
 		return contrasenia;
+	}
+
+	public void activarBotones(FrmPrincipal frmPrincipal) {
+		frmPrincipal.activarBotones();
+
 	}
 }
