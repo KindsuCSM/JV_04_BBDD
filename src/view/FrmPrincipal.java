@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 public class FrmPrincipal extends JFrame {
 
+<<<<<<< Updated upstream
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private PanDetalle panDetalle;
@@ -17,6 +18,16 @@ public class FrmPrincipal extends JFrame {
 	private PanResumen panResumen;
 	private MenuBar mnBar;
 	private Conexion conn;
+=======
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+    private PanDetalle panDetalle;
+    private PanEntrar panEntrar;
+    private PanResumen panResumen;
+    private PanAcercaDe panAcercaDe;
+    private MenuBar mnBar;
+	Conexion conn;
+>>>>>>> Stashed changes
 
 	public FrmPrincipal() {
 		conn = new Conexion();
@@ -31,12 +42,22 @@ public class FrmPrincipal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
+<<<<<<< Updated upstream
 		panDetalle = new PanDetalle();
 		panEntrar = new PanEntrar(conn);
 		panResumen = new PanResumen();
 
 		mnBar = new MenuBar(this, panDetalle, panEntrar, panResumen, conn);
 		setJMenuBar(mnBar.mnBar());
+=======
+        panDetalle = new PanDetalle();
+        panEntrar = new PanEntrar();
+        panResumen = new PanResumen();
+        panAcercaDe = new PanAcercaDe();
+
+        mnBar = new MenuBar(this, panDetalle, panEntrar, panResumen, panAcercaDe);
+        setJMenuBar(mnBar.mnBar());
+>>>>>>> Stashed changes
 
 		contentPane.add(panEntrar, BorderLayout.CENTER);
 
