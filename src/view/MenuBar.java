@@ -59,7 +59,7 @@ public class MenuBar implements ActionListener {
 		menuBar.add(mnValidar);
 		menuBar.add(mnVisualizar);
 		menuBar.add(mnAcercaDe);
-		
+
 		mnVisualizar.setEnabled(false);
 
 		return menuBar;
