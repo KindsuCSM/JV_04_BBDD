@@ -41,6 +41,7 @@ public class FrmPrincipal extends JFrame {
         panAcercaDe = new PanAcercaDe();
 
         mnBar = new MenuBar(this, panDetalle, panEntrar, panResumen, panAcercaDe, conn);
+
         setJMenuBar(mnBar.mnBar());
 
 		contentPane.add(panEntrar, BorderLayout.CENTER);

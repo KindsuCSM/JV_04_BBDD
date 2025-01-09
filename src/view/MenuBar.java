@@ -20,14 +20,13 @@ public class MenuBar implements ActionListener {
 
 	public MenuBar(FrmPrincipal frmPrincipal, PanDetalle panDetalle, PanEntrar panEntrar, PanResumen panResumen, PanAcercaDe panAcercaDe, Conexion con) {
 
-
-
 		this.frmPrincipal = frmPrincipal;
 		this.panDetalle = panDetalle;
 		this.panEntrar = panEntrar;
 		this.panResumen = panResumen;
-		this.con = con;
 		this.panAcercaDe = panAcercaDe;
+		this.con = con;
+
 	}
 
 	public JMenuBar mnBar() {
