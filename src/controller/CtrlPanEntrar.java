@@ -23,6 +23,7 @@ public class CtrlPanEntrar {
                 this.usuario = usuario;
 				this.contrasenia = contrasenia;
 				System.out.println("Inicio de sesión correcta");
+				//Activar Botones
 				return true;
 			}else {
 				JOptionPane.showMessageDialog(null, "Usuario o contraseña no válidos.", "Error", JOptionPane.ERROR_MESSAGE);

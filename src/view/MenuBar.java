@@ -13,25 +13,18 @@ public class MenuBar implements ActionListener {
 	private JMenu mnValidar, mnVisualizar, mnAcercaDe;
 	private JMenuItem itmEntrar, itmSalir, itmDetalle, itmResumen, itmAcerdaDe;
 	private FrmPrincipal frmPrincipal;
-<<<<<<< Updated upstream
-	private JPanel panDetalle, panEntrar, panResumen;
-	private Conexion con;
-
-	public MenuBar(FrmPrincipal frmPrincipal, PanDetalle panDetalle, PanEntrar panEntrar, PanResumen panResumen, Conexion con) {
-=======
 	private JPanel panDetalle, panEntrar, panResumen, panAcercaDe;
+	private Conexion con;
+	private Boolean activo;
 
-	public MenuBar(FrmPrincipal frmPrincipal, PanDetalle panDetalle, PanEntrar panEntrar, PanResumen panResumen, PanAcercaDe panAcercaDe) {
->>>>>>> Stashed changes
+	public MenuBar(FrmPrincipal frmPrincipal, PanDetalle panDetalle, PanEntrar panEntrar, PanResumen panResumen, PanAcercaDe panAcercaDe, Conexion con) {
+
 		this.frmPrincipal = frmPrincipal;
 		this.panDetalle = panDetalle;
 		this.panEntrar = panEntrar;
 		this.panResumen = panResumen;
-<<<<<<< Updated upstream
 		this.con = con;
-=======
 		this.panAcercaDe = panAcercaDe;
->>>>>>> Stashed changes
 	}
 
 	public JMenuBar mnBar() {
@@ -64,6 +57,8 @@ public class MenuBar implements ActionListener {
 		menuBar.add(mnVisualizar);
 		menuBar.add(mnAcercaDe);
 
+		mnVisualizar.setEnabled(false);
+		activo = false;
 
 		return menuBar;
 	}
