@@ -1,6 +1,7 @@
 package view;
 
 import controller.Conexion;
+import controller.CtrlPanEntrar;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -15,9 +16,11 @@ public class MenuBar implements ActionListener {
 	private FrmPrincipal frmPrincipal;
 	private JPanel panDetalle, panEntrar, panResumen, panAcercaDe;
 	private Conexion con;
-	private Boolean activo;
+	private CtrlPanEntrar ctrlEntrar;
 
 	public MenuBar(FrmPrincipal frmPrincipal, PanDetalle panDetalle, PanEntrar panEntrar, PanResumen panResumen, PanAcercaDe panAcercaDe, Conexion con) {
+
+
 
 		this.frmPrincipal = frmPrincipal;
 		this.panDetalle = panDetalle;
@@ -56,9 +59,8 @@ public class MenuBar implements ActionListener {
 		menuBar.add(mnValidar);
 		menuBar.add(mnVisualizar);
 		menuBar.add(mnAcercaDe);
-
+		
 		mnVisualizar.setEnabled(false);
-		activo = false;
 
 		return menuBar;
 	}
@@ -91,6 +93,15 @@ public class MenuBar implements ActionListener {
 				con.desconectar();
 				System.exit(0);
 			}
+		}
+	}
+
+	private void enableValidar() {
+		ctrlEntrar = new CtrlPanEntrar();
+		if(ctrlEntrar.getUsuario() == null && ctrlEntrar.getContrasenia() == null) {
+			mnVisualizar.setEnabled(false);
+		}else {
+			mnVisualizar.setEnabled(true);
 		}
 	}
 }
