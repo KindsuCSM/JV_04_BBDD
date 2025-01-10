@@ -6,18 +6,22 @@ import model.Asignatura;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import javax.swing.text.IconView;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import java.awt.*;
 import java.io.Serial;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
 
 public class PanDetalle extends JPanel {
 
 	private JTextField numeroField;
 	private JTextField usuarioField;
-	private JPasswordField contraseñaField;
+	private JPasswordField contraseniaField;
 	private JTextField fechaNacimientoField;
 	private JTextField notaMediaField;
 	private JLabel imagenLabel;
@@ -25,9 +29,11 @@ public class PanDetalle extends JPanel {
 	private JButton calcularMediaButton;
 	private CtrlPanDetalle ctrlPanDetalle;
 
+	private JSpinner fechaNacimientoSpinner;
+
 	@Serial
-    private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = 1L;
+
 	public PanDetalle(int alumn_id) throws SQLException {
 		setLayout(new BorderLayout());
 		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY),
@@ -43,42 +49,78 @@ public class PanDetalle extends JPanel {
 
 		// Imagen del Alumno
 		imagenLabel = new JLabel();
-		imagenLabel.setPreferredSize(new Dimension(100, 100));
+		imagenLabel.setPreferredSize(new Dimension(80, 100));
 		imagenLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		datosPanel.add(imagenLabel);
 
 		mainPanel.add(datosPanel);
 
 		// Campo Número
+		JPanel numeroPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JLabel numeroLabel = new JLabel("Número: ");
+		numeroLabel.setPreferredSize(new Dimension(80, 20));  // Hacer el label pequeño
 		numeroField = new JTextField(20);
 		numeroField.setEditable(false);
-		datosPanel.add(numeroField);
-		datosPanel.add(Box.createVerticalStrut(10)); // Espaciado
+		numeroPanel.add(numeroLabel);
+		numeroPanel.add(numeroField);
+		datosPanel.add(numeroPanel);
+		datosPanel.add(Box.createVerticalStrut(10));
 
 		// Campo Usuario
+		JPanel usuarioPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JLabel usuarioLabel = new JLabel("Usuario: ");
+		usuarioLabel.setPreferredSize(new Dimension(80, 20));  // Hacer el label pequeño
 		usuarioField = new JTextField(20);
 		usuarioField.setEditable(false);
-		datosPanel.add(usuarioField);
+		usuarioPanel.add(usuarioLabel);
+		usuarioPanel.add(usuarioField);
+		datosPanel.add(usuarioPanel);
 		datosPanel.add(Box.createVerticalStrut(10));
 
 		// Campo Contraseña
-		contraseñaField = new JPasswordField(20);
-		contraseñaField.setEditable(false);
-		datosPanel.add(contraseñaField);
+		JPanel contraseniaPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JLabel contraseniaLabel = new JLabel("Contraseña: ");
+		contraseniaLabel.setPreferredSize(new Dimension(80, 20));  // Hacer el label pequeño
+		contraseniaField = new JPasswordField(20);
+		contraseniaField.setEditable(false);
+		contraseniaPanel.add(contraseniaLabel);
+		contraseniaPanel.add(contraseniaField);
+		datosPanel.add(contraseniaPanel);
 		datosPanel.add(Box.createVerticalStrut(10));
 
 		// Campo Fecha de Nacimiento
+		JPanel fechaNacimientoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JLabel fechaNacimientoLabel = new JLabel("Fecha Nac.: ");
+		fechaNacimientoLabel.setPreferredSize(new Dimension(80, 20));  // Hacer el label pequeño
 		fechaNacimientoField = new JTextField(20);
 		fechaNacimientoField.setEditable(false);
-		datosPanel.add(fechaNacimientoField);
+
+		// Configuración de JSpinner para fechas
+		SpinnerDateModel dateModel = new SpinnerDateModel();
+		fechaNacimientoSpinner = new JSpinner(dateModel);
+		fechaNacimientoSpinner.setEditor(new JSpinner.DateEditor(fechaNacimientoSpinner, "dd/MM/yyyy"));
+		fechaNacimientoSpinner.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				actualizarFechaNacimiento((Date) fechaNacimientoSpinner.getValue());  // Al cambiar la fecha
+			}
+		});
+
+		fechaNacimientoPanel.add(fechaNacimientoLabel);
+		fechaNacimientoPanel.add(fechaNacimientoSpinner);
+		datosPanel.add(fechaNacimientoPanel);
 		datosPanel.add(Box.createVerticalStrut(10));
 
 		// Campo Nota Media
+		JPanel notaMediaPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JLabel notaMediaLabel = new JLabel("Nota Media: ");
+		notaMediaLabel.setPreferredSize(new Dimension(80, 20));  // Hacer el label pequeño
 		notaMediaField = new JTextField(20);
 		notaMediaField.setEditable(false);
-		datosPanel.add(notaMediaField);
+		notaMediaPanel.add(notaMediaLabel);
+		notaMediaPanel.add(notaMediaField);
+		datosPanel.add(notaMediaPanel);
 		datosPanel.add(Box.createVerticalStrut(10));
-
 
 		// JList para las asignaturas
 		JPanel asignaturasPanel = new JPanel(new BorderLayout());
@@ -92,18 +134,17 @@ public class PanDetalle extends JPanel {
 
 		add(mainPanel, BorderLayout.CENTER);
 
-		//Boton
+		// Botón Calcular Media
 		calcularMediaButton = new JButton("Calcular Media");
 		calcularMediaButton.addActionListener(e -> {
-            try {
-                ctrlPanDetalle.calcularMedia(alumn_id);
+			try {
+				ctrlPanDetalle.calcularMedia(alumn_id);
 				setAlumnoData(ctrlPanDetalle.actualizarDatos(alumn_id));
-
-            } catch (SQLException ex) {
+			} catch (SQLException ex) {
 				System.out.println("Problemas en nota media.");
-                throw new RuntimeException(ex);
-            }
-        });
+				throw new RuntimeException(ex);
+			}
+		});
 		asignaturasPanel.add(calcularMediaButton, BorderLayout.SOUTH);
 
 		mainPanel.add(asignaturasPanel);
@@ -114,16 +155,35 @@ public class PanDetalle extends JPanel {
 		setAlumnoData(ctrlPanDetalle.actualizarDatos(alumn_id));
 	}
 
+	private void actualizarFechaNacimiento(Date nuevaFecha) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		fechaNacimientoField.setText(sdf.format(nuevaFecha));
+
+		// Aquí podrías actualizar el objeto Alumno con la nueva fecha
+	}
+
 	// Métodos para actualizar la información del panel
 	public void setAlumnoData(Alumno alumno) throws SQLException {
 		numeroField.setText(String.valueOf(alumno.getAlumn_id()));
 		usuarioField.setText(alumno.getUser());
-		contraseñaField.setText(alumno.getPassword());
-		fechaNacimientoField.setText(alumno.getBirthday_date().toString());
-		notaMediaField.setText(String.valueOf(alumno.getAverage_score()));
-		imagenLabel.setIcon((Icon)alumno.getPhoto());
-		ctrlPanDetalle.setAsignaturasData(alumno.getAlumn_id());
+		contraseniaField.setText(alumno.getPassword());
 
+		// Formatear la fecha
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		fechaNacimientoField.setText(sdf.format(alumno.getBirthday_date().getTime()));
+
+		// Establecer la fecha en el JSpinner
+		fechaNacimientoSpinner.setValue(alumno.getBirthday_date().getTime());
+
+		// Actualizar la nota media
+		double notaMedia = alumno.getAverage_score();
+		notaMediaField.setText(String.valueOf(notaMedia));
+
+		// Establecer foto
+		imagenLabel.setIcon((Icon)alumno.getPhoto());
+
+		// Asignaturas
+		ctrlPanDetalle.setAsignaturasData(alumno.getAlumn_id());
 		List<Asignatura> asignaturas = ctrlPanDetalle.setAsignaturasData(alumno.getAlumn_id());
 
 		// Crear el DefaultListModel para las asignaturas
@@ -138,5 +198,5 @@ public class PanDetalle extends JPanel {
 			asignaturasModel.addElement(asignatura.getName() + ": " + asignatura.getScore());
 		}
 	}
-
 }
+

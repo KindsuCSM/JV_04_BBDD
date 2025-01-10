@@ -45,6 +45,8 @@ public class CtrlPanDetalle {
 
     }
 
+
+
     public void calcularMedia(Integer alumnId) throws SQLException {
         double totalNotas = 0;
         int numAsignaturas = 0;
