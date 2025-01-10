@@ -17,10 +17,12 @@ public class PanResumen extends JPanel {
 	private JLabel lblAsignatura;
 	private JButton btnCambiar, btnGuardar, btnAnterior, btnSiguiente;
 	private CtrlPanResumen ctrlResumen;
+	private Conexion con;
 
 
 	public PanResumen(Conexion conn) {
 		setLayout(null);
+		this.con = conn;
 
 		lblAsignatura = new JLabel("Asignatura:");
 		lblAsignatura.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -56,12 +58,19 @@ public class PanResumen extends JPanel {
 
 	private void setListeners() {
 		btnCambiar.addActionListener(e -> {
-			btnGuardar.setVisible(true);
-			btnGuardar.setEnabled(true);
+			ableGuardar(true);
 		});
 		btnGuardar.addActionListener(e -> {
-			ctrlResumen = new CtrlPanResumen();
+			ctrlResumen = new CtrlPanResumen(con);
 			ctrlResumen.cambiarNotaAsignatura();
+			ableGuardar(false);
 		});
+	}
+
+	private void ableGuardar(Boolean esEditable){
+		btnGuardar.setVisible(esEditable);
+		btnGuardar.setEnabled(esEditable);
+		txtNota.setEditable(esEditable);
+		txtNota.setEnabled(esEditable);
 	}
 }

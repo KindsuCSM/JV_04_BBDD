@@ -7,10 +7,7 @@ public class PanDetalle extends JPanel {
 
 	@Serial
     private static final long serialVersionUID = 1L;
-
-	/**
-	 * Create the panel.
-	 */
+	
 	public PanDetalle() {
 
 	}

@@ -75,7 +75,6 @@ public class MenuBar implements ActionListener {
 		frmPrincipal.repaint();
 	}
 
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == itmEntrar) {
@@ -96,15 +95,6 @@ public class MenuBar implements ActionListener {
 				con.desconectar();
 				System.exit(0);
 			}
-		}
-	}
-
-	private void enableValidar() {
-		ctrlEntrar = new CtrlPanEntrar();
-		if(ctrlEntrar.getUsuario() == null && ctrlEntrar.getContrasenia() == null) {
-			mnVisualizar.setEnabled(false);
-		}else {
-			mnVisualizar.setEnabled(true);
 		}
 	}
 }

@@ -63,8 +63,11 @@ public class PanEntrar extends JPanel {
 			String contrasenia = new String(pwdContrasenia.getPassword());
 
 			ctrlPanelEntrar = new CtrlPanEntrar();
-			ctrlPanelEntrar.accesoUsuario(conexion, user, contrasenia, (FrmPrincipal) SwingUtilities.getWindowAncestor(this));
+			boolean accesoCorrecto = ctrlPanelEntrar.accesoUsuario(conexion, user, contrasenia, (FrmPrincipal) SwingUtilities.getWindowAncestor(this));
 
+			if(accesoCorrecto){
+				borrarCampos();
+			}
 		});
 	}
 
