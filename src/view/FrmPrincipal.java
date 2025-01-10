@@ -5,8 +5,7 @@ import controller.CtrlPanEntrar;
 
 import java.awt.*;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 public class FrmPrincipal extends JFrame {
@@ -14,10 +13,10 @@ public class FrmPrincipal extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
+	private JPanel panInicio;
     private PanDetalle panDetalle;
     private PanEntrar panEntrar;
     private PanResumen panResumen;
-    private PanAcercaDe panAcercaDe;
     private MenuBar mnBar;
 	Conexion conn;
 
@@ -27,7 +26,7 @@ public class FrmPrincipal extends JFrame {
 
 		setTitle("Notas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 650, 400);
 		setLocationRelativeTo(null);
 
 		contentPane = new JPanel(new BorderLayout());
@@ -35,16 +34,17 @@ public class FrmPrincipal extends JFrame {
 		setContentPane(contentPane);
 
 
+		panInicio = new JPanel();
+		panInicio.add(new JLabel("Inicia sesion para empezar..."));
 		panDetalle = new PanDetalle();
 		panEntrar = new PanEntrar(conn);
 		panResumen = new PanResumen(conn);
-        panAcercaDe = new PanAcercaDe();
 
-        mnBar = new MenuBar(this, panDetalle, panEntrar, panResumen, panAcercaDe, conn);
+        mnBar = new MenuBar(this, panDetalle, panEntrar, panResumen, conn);
 
         setJMenuBar(mnBar.mnBar());
 
-		contentPane.add(panEntrar, BorderLayout.CENTER);
+		contentPane.add(panInicio, BorderLayout.CENTER);
 
 		addWindowListener(new java.awt.event.WindowAdapter() {
             @Override

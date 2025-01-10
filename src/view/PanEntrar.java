@@ -24,30 +24,30 @@ public class PanEntrar extends JPanel {
 
 		lblUsuario = new JLabel("Usuario:");
 		lblUsuario.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblUsuario.setBounds(130, 26, 106, 14);
+		lblUsuario.setBounds(200, 46, 106, 14);
 		add(lblUsuario);
 
 		txtUsuario = new JTextField();
 		txtUsuario.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		txtUsuario.setBounds(130, 51, 170, 30);
+		txtUsuario.setBounds(200, 71, 170, 30);
 		add(txtUsuario);
 		txtUsuario.setColumns(10);
 
 		lblContrasenia = new JLabel("Contraseña:");
 		lblContrasenia.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblContrasenia.setBounds(130, 100, 106, 14);
+		lblContrasenia.setBounds(200, 120, 106, 14);
 		add(lblContrasenia);
 
 		pwdContrasenia = new JPasswordField();
-		pwdContrasenia.setBounds(130, 125, 170, 30);
+		pwdContrasenia.setBounds(200, 145, 170, 30);
 		add(pwdContrasenia);
 
 		btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(120, 181, 89, 23);
+		btnCancelar.setBounds(190, 201, 89, 23);
 		add(btnCancelar);
 
 		btnAceptar = new JButton("Aceptar");
-		btnAceptar.setBounds(220, 181, 89, 23);
+		btnAceptar.setBounds(290, 201, 89, 23);
 		add(btnAceptar);
 
 		setListeners();
