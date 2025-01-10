@@ -20,10 +20,13 @@ public class FrmPrincipal extends JFrame {
     private PanResumen panResumen;
     private MenuBar mnBar;
 	Conexion conn;
+	private int alumn_id;
+	private CtrlPanEntrar ctrlEntrar;
 
 	public FrmPrincipal() throws SQLException {
 		conn = new Conexion();
 		conn.conectar();
+		ctrlEntrar = new CtrlPanEntrar();
 
 		setTitle("Notas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,7 +42,7 @@ public class FrmPrincipal extends JFrame {
 		panInicio.add(new JLabel("Inicia sesion para empezar..."));
 		//panDetalle = new PanDetalle();
 		panEntrar = new PanEntrar(conn);
-		panResumen = new PanResumen(conn);
+		panResumen = new PanResumen(conn, alumn_id);
 
         mnBar = new MenuBar(this, panDetalle, panEntrar, panResumen, conn);
 
@@ -63,6 +66,7 @@ public class FrmPrincipal extends JFrame {
 	}
 
 	public void actualizarMenu(int alumn_id) throws SQLException {
+		this.alumn_id = alumn_id;
 		panDetalle = new PanDetalle(alumn_id);
 		mnBar.actualizarItems(panDetalle);
 	}

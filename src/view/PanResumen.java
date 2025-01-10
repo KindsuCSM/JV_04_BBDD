@@ -4,7 +4,6 @@ import javax.swing.JPanel;
 
 import controller.Conexion;
 import controller.CtrlPanResumen;
-
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -13,14 +12,14 @@ import java.awt.Font;
 public class PanResumen extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField txtNota;
-	private JLabel lblAsignatura;
-	private JButton btnCambiar, btnGuardar, btnAnterior, btnSiguiente;
+	public JTextField txtNota;
+	public JLabel lblAsignatura;
+	private JButton btnCambiar, btnGuardar, btnAnterior, btnSiguiente, btnPrimero, btnUltimo;
 	private CtrlPanResumen ctrlResumen;
 	private Conexion con;
 
 
-	public PanResumen(Conexion conn) {
+	public PanResumen(Conexion conn, Integer alumn_id) {
 		setLayout(null);
 		this.con = conn;
 
@@ -53,6 +52,16 @@ public class PanResumen extends JPanel {
 		btnSiguiente.setBounds(290, 180, 90, 23);
 		add(btnSiguiente);
 
+		btnPrimero = new JButton("Primero");
+		btnPrimero.setBounds(123, 210, 89, 23);
+		add(btnPrimero);
+
+		btnUltimo = new JButton("Último");
+		btnUltimo.setBounds(222, 210, 89, 23);
+		add(btnUltimo);
+
+		ctrlResumen = new CtrlPanResumen(this, con, alumn_id);
+
 		setListeners();
 	}
 
@@ -61,9 +70,14 @@ public class PanResumen extends JPanel {
 			ableGuardar(true);
 		});
 		btnGuardar.addActionListener(e -> {
-			ctrlResumen = new CtrlPanResumen(con);
 			ctrlResumen.cambiarNotaAsignatura();
 			ableGuardar(false);
+		});
+		btnAnterior.addActionListener(e -> {
+			ctrlResumen.anteriorAsignatura();
+		});
+		btnSiguiente.addActionListener(e -> {
+			ctrlResumen.siguienteAsignatura();
 		});
 	}
 
