@@ -1,5 +1,6 @@
 package view;
 
+import controller.Conexion;
 import controller.CtrlPanDetalle;
 import model.Alumno;
 import model.Asignatura;
@@ -11,6 +12,7 @@ import javax.swing.event.ChangeListener;
 
 import java.awt.*;
 import java.io.Serial;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,6 +30,7 @@ public class PanDetalle extends JPanel {
 	private JList<String> asignaturasList;
 	private JButton calcularMediaButton;
 	private CtrlPanDetalle ctrlPanDetalle;
+	private int id_alumn;
 
 	private JSpinner fechaNacimientoSpinner;
 
@@ -35,6 +38,7 @@ public class PanDetalle extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	public PanDetalle(int alumn_id) throws SQLException {
+		this.id_alumn = alumn_id;
 		setLayout(new BorderLayout());
 		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY),
 				"Información del Alumno", TitledBorder.LEADING, TitledBorder.TOP, new Font("Arial", Font.BOLD, 14)));
@@ -49,7 +53,7 @@ public class PanDetalle extends JPanel {
 
 		// Imagen del Alumno
 		imagenLabel = new JLabel();
-		imagenLabel.setPreferredSize(new Dimension(80, 100));
+		imagenLabel.setPreferredSize(new Dimension(70, 100));
 		imagenLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		datosPanel.add(imagenLabel);
 
@@ -58,7 +62,7 @@ public class PanDetalle extends JPanel {
 		// Campo Número
 		JPanel numeroPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel numeroLabel = new JLabel("Número: ");
-		numeroLabel.setPreferredSize(new Dimension(80, 20));  // Hacer el label pequeño
+		numeroLabel.setPreferredSize(new Dimension(70, 20));  // Hacer el label pequeño
 		numeroField = new JTextField(20);
 		numeroField.setEditable(false);
 		numeroPanel.add(numeroLabel);
@@ -69,7 +73,7 @@ public class PanDetalle extends JPanel {
 		// Campo Usuario
 		JPanel usuarioPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel usuarioLabel = new JLabel("Usuario: ");
-		usuarioLabel.setPreferredSize(new Dimension(80, 20));  // Hacer el label pequeño
+		usuarioLabel.setPreferredSize(new Dimension(70, 20));  // Hacer el label pequeño
 		usuarioField = new JTextField(20);
 		usuarioField.setEditable(false);
 		usuarioPanel.add(usuarioLabel);
@@ -80,7 +84,7 @@ public class PanDetalle extends JPanel {
 		// Campo Contraseña
 		JPanel contraseniaPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel contraseniaLabel = new JLabel("Contraseña: ");
-		contraseniaLabel.setPreferredSize(new Dimension(80, 20));  // Hacer el label pequeño
+		contraseniaLabel.setPreferredSize(new Dimension(70, 20));  // Hacer el label pequeño
 		contraseniaField = new JPasswordField(20);
 		contraseniaField.setEditable(false);
 		contraseniaPanel.add(contraseniaLabel);
@@ -91,7 +95,7 @@ public class PanDetalle extends JPanel {
 		// Campo Fecha de Nacimiento
 		JPanel fechaNacimientoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel fechaNacimientoLabel = new JLabel("Fecha Nac.: ");
-		fechaNacimientoLabel.setPreferredSize(new Dimension(80, 20));  // Hacer el label pequeño
+		fechaNacimientoLabel.setPreferredSize(new Dimension(70, 20));  // Hacer el label pequeño
 		fechaNacimientoField = new JTextField(20);
 		fechaNacimientoField.setEditable(false);
 
@@ -102,7 +106,7 @@ public class PanDetalle extends JPanel {
 		fechaNacimientoSpinner.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				actualizarFechaNacimiento((Date) fechaNacimientoSpinner.getValue());  // Al cambiar la fecha
+				actualizarFechaNacimiento( id_alumn,(Date)fechaNacimientoSpinner.getValue());  // Al cambiar la fecha
 			}
 		});
 
@@ -114,7 +118,7 @@ public class PanDetalle extends JPanel {
 		// Campo Nota Media
 		JPanel notaMediaPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel notaMediaLabel = new JLabel("Nota Media: ");
-		notaMediaLabel.setPreferredSize(new Dimension(80, 20));  // Hacer el label pequeño
+		notaMediaLabel.setPreferredSize(new Dimension(70, 20));  // Hacer el label pequeño
 		notaMediaField = new JTextField(20);
 		notaMediaField.setEditable(false);
 		notaMediaPanel.add(notaMediaLabel);
@@ -155,12 +159,20 @@ public class PanDetalle extends JPanel {
 		setAlumnoData(ctrlPanDetalle.actualizarDatos(alumn_id));
 	}
 
-	private void actualizarFechaNacimiento(Date nuevaFecha) {
+	private void actualizarFechaNacimiento(int user_id, Date nuevaFecha) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		fechaNacimientoField.setText(sdf.format(nuevaFecha));
 
-		// Aquí podrías actualizar el objeto Alumno con la nueva fecha
-	}
+		String updateSql = "UPDATE alumn SET birthday_date = ? WHERE alumn_id = ?";
+		try (PreparedStatement pst = Conexion.obtenerStatementResumen().getConnection().prepareStatement(updateSql)) {
+			pst.setDate(1, new java.sql.Date(nuevaFecha.getTime()));
+			pst.setInt(2, user_id);
+			pst.executeUpdate();
+		} catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
 	// Métodos para actualizar la información del panel
 	public void setAlumnoData(Alumno alumno) throws SQLException {
