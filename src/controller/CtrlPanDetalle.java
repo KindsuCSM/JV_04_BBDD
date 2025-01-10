@@ -143,14 +143,14 @@ public class CtrlPanDetalle {
         return asignaturasList;
     }
 
-    public Image recuperarImagen(int alumn_id) throws SQLException {
+    public Image recuperarImagen(int alumn_id) {
         Image image = null;
         String query = "SELECT photo FROM alumn WHERE alumn_id = ?";
 
-        try (PreparedStatement stmt = Conexion.obtenerStatementResumen().getConnection().prepareStatement(query)) {
-            stmt.setInt(1, alumn_id);
+        try (PreparedStatement ps = Conexion.obtenerStatementResumen().getConnection().prepareStatement(query)) {
+            ps.setInt(1, alumn_id);
 
-            try (ResultSet rs = stmt.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     // Obtener el campo BLOB
                     Blob photoBlob = rs.getBlob("photo");
@@ -165,7 +165,6 @@ public class CtrlPanDetalle {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return image;
     }
 }

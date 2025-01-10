@@ -245,9 +245,9 @@ public class PanDetalle extends JPanel {
     }
 
     public ImageIcon redimensionarImagenAjustada(Image image, int width, int height) {
-    // Redimensiona la imagen al tamaño deseado (en este caso 50x50) para ajustarse al cuadro
-    Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-    return new ImageIcon(scaledImage); // Devuelve el ImageIcon redimensionado
-}
+        // Redimensiona la imagen al tamaño deseado (en este caso 50x50) para ajustarse al cuadro
+        Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return new ImageIcon(scaledImage); // Devuelve el ImageIcon redimensionado
+    }
 }
 

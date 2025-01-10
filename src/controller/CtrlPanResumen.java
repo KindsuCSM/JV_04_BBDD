@@ -9,23 +9,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CtrlPanResumen {
-	private ArrayList<Asignatura> asignaturas;
-	private Conexion conn;
-	private int index;
-	private PanResumen panResumen;
+    private ArrayList<Asignatura> asignaturas;
+    private Conexion conn;
+    private int index;
+    private PanResumen panResumen;
     private int id_alumn;
     private CtrlPanDetalle ctrlPanDetalle;
 
 
-	public CtrlPanResumen(PanResumen panResumen, Conexion conexion, int id_alumn) {
-		this.conn = conexion;
-		this.panResumen = panResumen;
+    public CtrlPanResumen(PanResumen panResumen, Conexion conexion, int id_alumn) {
+        this.conn = conexion;
+        this.panResumen = panResumen;
         this.id_alumn = id_alumn;
-		this.asignaturas = getAsignaturas();
-		this.index = 0;
-	}
+        this.asignaturas = getAsignaturas();
+        this.index = 0;
+    }
 
-	public void cambiarNotaAsignatura() throws SQLException {
+    // Función que cambia la nota de la asignatura mediante un statement
+    public void cambiarNotaAsignatura() throws SQLException {
         if (index >= 0 && index < asignaturas.size()) {
             Asignatura asignatura = asignaturas.get(index);
             double nuevaNota = Double.parseDouble(panResumen.txtNota.getText());
@@ -50,17 +51,19 @@ public class CtrlPanResumen {
         }
         ctrlPanDetalle = new CtrlPanDetalle();
         ctrlPanDetalle.actualizarDatos(id_alumn);
-	}
+    }
 
-	public void setData(){
-        if(index >= 0 && index < asignaturas.size()) {
-			Asignatura asignatura = asignaturas.get(index);
+    // Función que pone los datos en el panel
+    public void setData() {
+        if (index >= 0 && index < asignaturas.size()) {
+            Asignatura asignatura = asignaturas.get(index);
             panResumen.lblAsignatura.setText(asignatura.getName());
             panResumen.txtNota.setText(String.valueOf(asignatura.getScore()));
-		}
+        }
         bloquearBotones();
-	}
+    }
 
+    // Bloquea los botones dependiendo de si está en primer o ultimo lugar
     private void bloquearBotones() {
         panResumen.btnAnterior.setEnabled(index > 0);
         panResumen.btnSiguiente.setEnabled(index < asignaturas.size() - 1);
@@ -68,8 +71,10 @@ public class CtrlPanResumen {
         panResumen.btnUltimo.setEnabled(index < asignaturas.size() - 1);
     }
 
-	private ArrayList<Asignatura> getAsignaturas() {
-		ArrayList<Asignatura> lstAsignaturas = new ArrayList<>();
+    // Obtiene la lista de asignaturas del usuario que ha iniciado la sesion
+    // lo guarda en una lista
+    private ArrayList<Asignatura> getAsignaturas() {
+        ArrayList<Asignatura> lstAsignaturas = new ArrayList<>();
         String sql = "SELECT * FROM subject WHERE alumn_id = ?";
         try {
             PreparedStatement ps = conn.getConnection().prepareStatement(sql);
@@ -89,13 +94,17 @@ public class CtrlPanResumen {
         }
         System.out.println(lstAsignaturas.size());
         return lstAsignaturas;
-	}
-	public void siguienteAsignatura() {
+    }
+
+    // Obtener la siguiente asignatura añadiendo +1 al indice
+    public void siguienteAsignatura() {
         if (index < asignaturas.size() - 1) {
             index++;
             setData();
         }
     }
+
+    // Obtener la anterior asignatura quitandole -1 al indice
     public void anteriorAsignatura() {
         if (index > 0) {
             index--;
@@ -103,15 +112,20 @@ public class CtrlPanResumen {
         }
     }
 
+    // Poner el indice en 0 para ir a la primera asignatura
     public void primeraAsignatura() {
-        index = 1;
+        index = 0;
         setData();
     }
+
+    // Poner el indice como el numero total de asignaturas que hay en la lista de asignaturas
     public void ultimaAsignatura() {
         index = asignaturas.size() - 1;
         setData();
     }
 
+    // Recoge la nota de la asignatura actual que aun no ha cambiado el usuario en caso de que quiera
+    // cancelar la operación
     public void recogerNota() {
         Asignatura actual = asignaturas.get(index);
         panResumen.txtNota.setText(String.valueOf(actual.getScore()));
