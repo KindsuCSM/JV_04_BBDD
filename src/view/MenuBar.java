@@ -1,6 +1,7 @@
 package view;
 
 import controller.Conexion;
+import controller.CtrlPanEntrar;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ public class MenuBar implements ActionListener {
 	private FrmPrincipal frmPrincipal;
 	private JPanel panDetalle, panEntrar, panResumen;
 	private Conexion con;
+	private CtrlPanEntrar ctrlEntrar;
 
 	public MenuBar(FrmPrincipal frmPrincipal, PanDetalle panDetalle, PanEntrar panEntrar, PanResumen panResumen, Conexion con) {
 
@@ -65,10 +67,14 @@ public class MenuBar implements ActionListener {
 		mnVisualizar.setEnabled(true);
 	}
 
-	public void actualizarItemDetalle(JPanel panel){
+	public void actualizarItems(JPanel panel){
 		panDetalle = panel;
 	}
 
+	public void actualizarResumen(JPanel panel) {
+		panResumen = panel;
+	}
+	
 	private void cambiarPanel(JPanel panelNuevo) {
 		frmPrincipal.getContentPane().removeAll();
 		frmPrincipal.getContentPane().add(panelNuevo, BorderLayout.CENTER);

@@ -2,7 +2,6 @@ package controller;
 
 import view.FrmPrincipal;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,6 +43,7 @@ public class CtrlPanEntrar {
 					JOptionPane.showMessageDialog(null, "Bienvenido " + user + ", sesion iniciada!", "Inicio Correcto", JOptionPane.INFORMATION_MESSAGE);
 					System.out.println("Alumno: " + usuario + ", Contraseña: " + contrasenia + ", id: " + alumn_id);
 					activarBotones(frmPrincipal);
+					frmPrincipal.actualizarMenu(alumn_id);
 					return true;
 				}
 			}else {
@@ -59,24 +59,9 @@ public class CtrlPanEntrar {
     }
 
 	public void actualizarPaneles(FrmPrincipal frmPrincipal) throws SQLException {
-
 		frmPrincipal.actualizarMenu(alumn_id);
-
-
 	}
 
-	public Integer getAlumn_id() {
-		return alumn_id;
-	}
-
-	public String getUsuario() {
-		System.out.println("Usuario actual: " + usuario);
-		return usuario;
-	}
-	public String getContrasenia() {
-		System.out.println("Contraseña actual: " + contrasenia);
-		return contrasenia;
-	}
 	public void activarBotones(FrmPrincipal frmPrincipal) {
 		frmPrincipal.activarBotones();
 	}
