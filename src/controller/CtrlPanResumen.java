@@ -108,4 +108,9 @@ public class CtrlPanResumen {
         index = asignaturas.size() - 1;
         setData();
     }
+
+    public void recogerNota() {
+        Asignatura actual = asignaturas.get(index);
+        panResumen.txtNota.setText(String.valueOf(actual.getScore()));
+    }
 }
