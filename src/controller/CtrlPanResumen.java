@@ -14,6 +14,7 @@ public class CtrlPanResumen {
 	private int index;
 	private PanResumen panResumen;
     private int id_alumn;
+    private CtrlPanDetalle ctrlPanDetalle;
 
 
 	public CtrlPanResumen(PanResumen panResumen, Conexion conexion, int id_alumn) {
@@ -24,7 +25,7 @@ public class CtrlPanResumen {
 		this.index = 0;
 	}
 
-	public void cambiarNotaAsignatura() {
+	public void cambiarNotaAsignatura() throws SQLException {
         if (index >= 0 && index < asignaturas.size()) {
             Asignatura asignatura = asignaturas.get(index);
             double nuevaNota = Double.parseDouble(panResumen.txtNota.getText());
@@ -47,6 +48,8 @@ public class CtrlPanResumen {
                 System.out.println("Error al actualizar la nota: " + e.getMessage());
             }
         }
+        ctrlPanDetalle = new CtrlPanDetalle();
+        ctrlPanDetalle.actualizarDatos(id_alumn);
 	}
 
 	public void setData(){

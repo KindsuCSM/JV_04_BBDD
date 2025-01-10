@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.sql.SQLException;
 
 public class PanResumen extends JPanel {
 
@@ -71,8 +72,12 @@ public class PanResumen extends JPanel {
 			ableGuardar(true);
 		});
 		btnGuardar.addActionListener(e -> {
-			ctrlResumen.cambiarNotaAsignatura();
-			ableGuardar(false);
+            try {
+                ctrlResumen.cambiarNotaAsignatura();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+            ableGuardar(false);
 		});
 		btnAnterior.addActionListener(e -> {
 			ctrlResumen.anteriorAsignatura();

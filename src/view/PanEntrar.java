@@ -64,7 +64,6 @@ public class PanEntrar extends JPanel {
 		btnAceptar.addActionListener(e -> {
 			String user = txtUsuario.getText();
 			String contrasenia = new String(pwdContrasenia.getPassword());
-
 			ctrlPanelEntrar = new CtrlPanEntrar();
 			boolean accesoCorrecto = ctrlPanelEntrar.accesoUsuario(conexion, user, contrasenia, (FrmPrincipal) SwingUtilities.getWindowAncestor(this));
 			if(accesoCorrecto){
