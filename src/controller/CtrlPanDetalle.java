@@ -3,6 +3,7 @@ package controller;
 import model.Alumno;
 import model.Asignatura;
 
+import javax.swing.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 public class CtrlPanDetalle {
+
 
 
     public Alumno actualizarDatos(Integer alumnId) throws SQLException {
@@ -69,16 +71,44 @@ public class CtrlPanDetalle {
                 double media = totalNotas / numAsignaturas;
                 System.out.println("La media del alumno es: " + media);
 
-                // Actualizar la nota media en la base de datos
-                String updateSql = "UPDATE alumn SET average_score = ? WHERE alumn_id = ?";
-                try (PreparedStatement pst = Conexion.obtenerStatementResumen().getConnection().prepareStatement(updateSql)) {
-                    pst.setDouble(1, media);
-                    pst.setInt(2, alumnId);
-                    pst.executeUpdate();
+                String sqlConsultaNota = "SELECT average_score from alumn where alumn_id = " + alumnId;
+                Double notaGuardada = 0.0;
+                try (Statement st2 = Conexion.obtenerStatementResumen();
+                     ResultSet rs2 = st.executeQuery(sqlConsultaNota)) {
+
+                    // Sumar las notas de todas las asignaturas
+                    while (rs2.next()) {
+                        notaGuardada = rs2.getDouble("average_score");
+                    }
                 }
 
-            } else {
-                System.out.println("No se encontraron asignaturas para el alumno.");
+                if(media == notaGuardada){
+                    return;
+                }
+
+                // Crear un diálogo para confirmar la acción
+                int respuesta = JOptionPane.showConfirmDialog(
+                        null,
+                        "La nota media calculada es: " + media + ". ¿Desea actualizar la nota media en la base de datos?",
+                        "Confirmar actualización",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                // Actualizar la nota media en la base de datos
+                    if (respuesta == JOptionPane.YES_OPTION) {
+
+                        String updateSql = "UPDATE alumn SET average_score = ? WHERE alumn_id = ?";
+                        try (PreparedStatement pst = Conexion.obtenerStatementResumen().getConnection().prepareStatement(updateSql)) {
+                            pst.setDouble(1, media);
+                            pst.setInt(2, alumnId);
+                            pst.executeUpdate();
+                        }
+
+                    } else {
+                        System.out.println("No se encontraron asignaturas para el alumno.");
+                    }
+            }else {
+                JOptionPane.showMessageDialog(null, "La nota media no fue actualizada.");
             }
 
         } catch (SQLException e) {

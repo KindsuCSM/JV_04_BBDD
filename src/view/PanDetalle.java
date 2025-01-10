@@ -11,12 +11,16 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.Serial;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 
 public class PanDetalle extends JPanel {
@@ -42,7 +46,8 @@ public class PanDetalle extends JPanel {
 		setLayout(new BorderLayout());
 		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY),
 				"Información del Alumno", TitledBorder.LEADING, TitledBorder.TOP, new Font("Arial", Font.BOLD, 14)));
-
+		
+		
 		// Panel principal para dividir datos y lista
 		JPanel mainPanel = new JPanel(new GridLayout(1, 2));
 
@@ -151,6 +156,21 @@ public class PanDetalle extends JPanel {
 		});
 		asignaturasPanel.add(calcularMediaButton, BorderLayout.SOUTH);
 
+		JButton actualizarButton = new JButton("Actualizar Lista");
+		actualizarButton.addActionListener(e -> {
+			try {
+				setAlumnoData(ctrlPanDetalle.actualizarDatos(alumn_id));
+			} catch (SQLException ex) {
+				System.out.println("Problemas en nota media.");
+				throw new RuntimeException(ex);
+			}
+		});
+
+		JPanel panelBotones = new JPanel(new BorderLayout());
+
+		panelBotones.add(actualizarButton, BorderLayout.NORTH);
+		panelBotones.add(calcularMediaButton, BorderLayout.SOUTH);
+		asignaturasPanel.add(panelBotones, BorderLayout.SOUTH);
 		mainPanel.add(asignaturasPanel);
 
 		add(mainPanel, BorderLayout.CENTER);
