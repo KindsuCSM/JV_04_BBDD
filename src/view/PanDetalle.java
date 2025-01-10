@@ -219,13 +219,15 @@ public class PanDetalle extends JPanel {
         Image photo = ctrlPanDetalle.recuperarImagen(alumno.getAlumn_id());
 
         // Redimensionar la imagen a 50x50 píxeles
+        ImageIcon icon;
         if (photo != null) {
-            ImageIcon icon = redimensionarImagenAjustada(photo, 60, 60); // Redimensionar
-            imagenLabel.setIcon(icon); // Asignar la imagen redimensionada
+            icon = redimensionarImagenAjustada(photo, 60, 60); // Redimensionar
+             // Asignar la imagen redimensionada
         } else {
-            imagenLabel.setIcon(null); // Si no hay imagen, eliminar el icono
-            imagenLabel.setText("No hay imagen"); // Mostrar mensaje si no hay foto
+            icon = new ImageIcon(PanDetalle.class.getResource("/imagenes/pordefecto.png"));
         }
+
+        imagenLabel.setIcon(icon);
 
         // Asignaturas
         ctrlPanDetalle.setAsignaturasData(alumno.getAlumn_id());
