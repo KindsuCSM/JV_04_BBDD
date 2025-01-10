@@ -58,9 +58,9 @@ public class PanDetalle extends JPanel {
 
         // Imagen del Alumno
         imagenLabel = new JLabel();
-        imagenLabel.setPreferredSize(new Dimension(60, 60)); // Establecer el tamaño fijo del cuadro
-        imagenLabel.setMaximumSize(new Dimension(60, 60)); // Asegúrate de que no crezca más de 50x50
-        imagenLabel.setMinimumSize(new Dimension(60, 60)); // No se puede hacer más pequeño que 50x50
+        imagenLabel.setPreferredSize(new Dimension(120, 120)); // Establecer el tamaño fijo del cuadro
+        imagenLabel.setMaximumSize(new Dimension(120, 120)); // Asegúrate de que no crezca más de 50x50
+        imagenLabel.setMinimumSize(new Dimension(120, 120)); // No se puede hacer más pequeño que 50x50
         imagenLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         datosPanel.add(imagenLabel);
 
@@ -221,7 +221,7 @@ public class PanDetalle extends JPanel {
         // Redimensionar la imagen a 50x50 píxeles
         ImageIcon icon;
         if (photo != null) {
-            icon = redimensionarImagenAjustada(photo, 60, 60); // Redimensionar
+            icon = redimensionarImagenAjustada(photo, 120, 120); // Redimensionar
              // Asignar la imagen redimensionada
         } else {
             icon = new ImageIcon(PanDetalle.class.getResource("/imagenes/pordefecto.png"));
