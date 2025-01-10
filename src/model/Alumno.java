@@ -70,7 +70,4 @@ public class Alumno {
 	public void setPhoto(Image photo) {
 		this.photo = photo;
 	}
-
-
-
 }

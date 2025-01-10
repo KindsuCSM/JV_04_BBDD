@@ -30,7 +30,7 @@ public class FrmPrincipal extends JFrame {
 
 		setTitle("Notas");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 650, 400);
+		setBounds(100, 100, 650, 500);
 		setLocationRelativeTo(null);
 
 		contentPane = new JPanel(new BorderLayout());

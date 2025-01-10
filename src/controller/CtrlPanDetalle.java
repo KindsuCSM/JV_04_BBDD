@@ -3,18 +3,17 @@ package controller;
 import model.Alumno;
 import model.Asignatura;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.awt.*;
+import java.io.ByteArrayInputStream;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 public class CtrlPanDetalle {
-
 
 
     public Alumno actualizarDatos(Integer alumnId) throws SQLException {
@@ -49,7 +48,6 @@ public class CtrlPanDetalle {
     }
 
 
-
     public void calcularMedia(Integer alumnId) throws SQLException {
         double totalNotas = 0;
         int numAsignaturas = 0;
@@ -82,7 +80,7 @@ public class CtrlPanDetalle {
                     }
                 }
 
-                if(media == notaGuardada){
+                if (media == notaGuardada) {
                     return;
                 }
 
@@ -95,19 +93,19 @@ public class CtrlPanDetalle {
                 );
 
                 // Actualizar la nota media en la base de datos
-                    if (respuesta == JOptionPane.YES_OPTION) {
+                if (respuesta == JOptionPane.YES_OPTION) {
 
-                        String updateSql = "UPDATE alumn SET average_score = ? WHERE alumn_id = ?";
-                        try (PreparedStatement pst = Conexion.obtenerStatementResumen().getConnection().prepareStatement(updateSql)) {
-                            pst.setDouble(1, media);
-                            pst.setInt(2, alumnId);
-                            pst.executeUpdate();
-                        }
-
-                    } else {
-                        System.out.println("No se encontraron asignaturas para el alumno.");
+                    String updateSql = "UPDATE alumn SET average_score = ? WHERE alumn_id = ?";
+                    try (PreparedStatement pst = Conexion.obtenerStatementResumen().getConnection().prepareStatement(updateSql)) {
+                        pst.setDouble(1, media);
+                        pst.setInt(2, alumnId);
+                        pst.executeUpdate();
                     }
-            }else {
+
+                } else {
+                    System.out.println("No se encontraron asignaturas para el alumno.");
+                }
+            } else {
                 JOptionPane.showMessageDialog(null, "La nota media no fue actualizada.");
             }
 
@@ -143,5 +141,31 @@ public class CtrlPanDetalle {
         }
 
         return asignaturasList;
+    }
+
+    public Image recuperarImagen(int alumn_id) throws SQLException {
+        Image image = null;
+        String query = "SELECT photo FROM alumn WHERE alumn_id = ?";
+
+        try (PreparedStatement stmt = Conexion.obtenerStatementResumen().getConnection().prepareStatement(query)) {
+            stmt.setInt(1, alumn_id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    // Obtener el campo BLOB
+                    Blob photoBlob = rs.getBlob("photo");
+
+                    if (photoBlob != null) {
+                        byte[] photoBytes = photoBlob.getBytes(1, (int) photoBlob.length());
+                        ByteArrayInputStream bis = new ByteArrayInputStream(photoBytes);
+                        image = ImageIO.read(bis);  // Convertir los bytes a un objeto Image
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return image;
     }
 }

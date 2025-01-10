@@ -1,13 +1,12 @@
 package view;
 
-import javax.swing.JPanel;
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
 
 import controller.Conexion;
 import controller.CtrlPanResumen;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.Font;
+
+import java.awt.*;
 import java.sql.SQLException;
 
 public class PanResumen extends JPanel {
@@ -22,6 +21,8 @@ public class PanResumen extends JPanel {
 
 	public PanResumen(Conexion conn, Integer alumn_id) {
 		setLayout(null);
+		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY),
+				"Resumen de asignaturas", TitledBorder.LEADING, TitledBorder.TOP, new Font("Arial", Font.BOLD, 14)));
 		this.con = conn;
 
 		lblAsignatura = new JLabel("XXXXXXXXXX");
