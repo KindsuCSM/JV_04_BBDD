@@ -7,9 +7,11 @@ import model.Asignatura;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.IconView;
+
 import java.awt.*;
 import java.io.Serial;
 import java.sql.SQLException;
+import java.util.List;
 
 public class PanDetalle extends JPanel {
 
@@ -42,7 +44,7 @@ public class PanDetalle extends JPanel {
 		// Imagen del Alumno
 		imagenLabel = new JLabel();
 		imagenLabel.setPreferredSize(new Dimension(100, 100));
-		//imagenLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		imagenLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		datosPanel.add(imagenLabel);
 
 		mainPanel.add(datosPanel);
@@ -122,6 +124,19 @@ public class PanDetalle extends JPanel {
 		imagenLabel.setIcon((Icon)alumno.getPhoto());
 		ctrlPanDetalle.setAsignaturasData(alumno.getAlumn_id());
 
+		List<Asignatura> asignaturas = ctrlPanDetalle.setAsignaturasData(alumno.getAlumn_id());
+
+		// Crear el DefaultListModel para las asignaturas
+		DefaultListModel<String> asignaturasModel = new DefaultListModel<>();
+		asignaturasList.setModel(asignaturasModel);
+
+		// Limpiar el modelo antes de agregar los nuevos elementos
+		asignaturasModel.clear();
+
+		// Agregar las asignaturas al modelo
+		for (Asignatura asignatura : asignaturas) {
+			asignaturasModel.addElement(asignatura.getName() + ": " + asignatura.getScore());
+		}
 	}
 
 }
