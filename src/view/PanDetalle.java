@@ -92,7 +92,16 @@ public class PanDetalle extends JPanel {
 
 		//Boton
 		calcularMediaButton = new JButton("Calcular Media");
-		calcularMediaButton.addActionListener(e -> calcularMedia());
+		calcularMediaButton.addActionListener(e -> {
+            try {
+                ctrlPanDetalle.calcularMedia(alumn_id);
+				setAlumnoData(ctrlPanDetalle.actualizarDatos(alumn_id));
+
+            } catch (SQLException ex) {
+				System.out.println("Problemas en nota media.");
+                throw new RuntimeException(ex);
+            }
+        });
 		asignaturasPanel.add(calcularMediaButton, BorderLayout.SOUTH);
 
 		mainPanel.add(asignaturasPanel);
@@ -104,51 +113,15 @@ public class PanDetalle extends JPanel {
 	}
 
 	// Métodos para actualizar la información del panel
-	public void setAlumnoData(Alumno alumno) {
+	public void setAlumnoData(Alumno alumno) throws SQLException {
 		numeroField.setText(String.valueOf(alumno.getAlumn_id()));
 		usuarioField.setText(alumno.getUser());
 		contraseñaField.setText(alumno.getPassword());
 		fechaNacimientoField.setText(alumno.getBirthday_date().toString());
 		notaMediaField.setText(String.valueOf(alumno.getAverage_score()));
 		imagenLabel.setIcon((Icon)alumno.getPhoto());
+		ctrlPanDetalle.setAsignaturasData(alumno.getAlumn_id());
+
 	}
-
-//	public void setAsignaturasData(List asignaturas) {
-//		DefaultListModel<String> listModel = new DefaultListModel<>();
-//		for (String asignatura : asignaturas) {
-//			listModel.addElement(asignatura);
-//		}
-//		asignaturasList.setModel(listModel);
-//	}
-
-	private void calcularMedia() {
-		DefaultListModel<String> model = (DefaultListModel<String>) asignaturasList.getModel();
-		if (model.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "No hay asignaturas para calcular la media.", "Error", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-
-		double total = 0;
-		int count = 0;
-		for (int i = 0; i < model.size(); i++) {
-			String asignatura = model.getElementAt(i);
-			String[] parts = asignatura.split(":");
-			if (parts.length == 2) {
-				try {
-					total += Double.parseDouble(parts[1].trim());
-					count++;
-				} catch (NumberFormatException ex) {
-					JOptionPane.showMessageDialog(this, "Error al procesar las notas.", "Error", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-			}
-		}
-
-		double media = total / count;
-		JOptionPane.showMessageDialog(this, "La nota media es: " + String.format("%.2f", media), "Media Calculada", JOptionPane.INFORMATION_MESSAGE);
-	}
-
-
-
 
 }
