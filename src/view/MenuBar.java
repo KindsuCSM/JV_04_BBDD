@@ -16,7 +16,7 @@ public class MenuBar implements ActionListener {
 	private FrmPrincipal frmPrincipal;
 	private JPanel panDetalle, panEntrar, panResumen;
 	private Conexion con;
-
+	private CtrlPanEntrar ctrlEntrar;
 
 	public MenuBar(FrmPrincipal frmPrincipal, PanDetalle panDetalle, PanEntrar panEntrar, PanResumen panResumen, Conexion con) {
 

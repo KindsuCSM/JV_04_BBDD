@@ -1,7 +1,6 @@
 package view;
 
 import controller.Conexion;
-import controller.CtrlPanEntrar;
 
 import java.awt.*;
 import java.sql.SQLException;
@@ -68,6 +67,6 @@ public class FrmPrincipal extends JFrame {
 	public void actualizarMenu(int alumn_id) throws SQLException {
 		this.alumn_id = alumn_id;
 		panDetalle = new PanDetalle(alumn_id);
-		mnBar.actualizarItems(panDetalle);
+		mnBar.actualizarItemDetalle(panDetalle);
 	}
 }
