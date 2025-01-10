@@ -129,14 +129,14 @@ public class PanDetalle extends JPanel {
 		// JList para las asignaturas
 		JPanel asignaturasPanel = new JPanel(new BorderLayout());
 		asignaturasPanel.setBorder(BorderFactory.createTitledBorder("Asignaturas"));
-
+		asignaturasPanel.setPreferredSize(new Dimension(70, 20));
 		asignaturasList = new JList<>();
 		JScrollPane scrollPane = new JScrollPane(asignaturasList);
 		asignaturasPanel.add(scrollPane, BorderLayout.CENTER);
 
 		mainPanel.add(asignaturasPanel);
 
-		add(mainPanel, BorderLayout.CENTER);
+		add(mainPanel, BorderLayout.EAST);
 
 		// Botón Calcular Media
 		calcularMediaButton = new JButton("Calcular Media");
@@ -207,7 +207,7 @@ public class PanDetalle extends JPanel {
 
 		// Agregar las asignaturas al modelo
 		for (Asignatura asignatura : asignaturas) {
-			asignaturasModel.addElement(asignatura.getName() + ": " + asignatura.getScore());
+			asignaturasModel.addElement(asignatura.getName() + "    ---->    " + asignatura.getScore());
 		}
 	}
 }
