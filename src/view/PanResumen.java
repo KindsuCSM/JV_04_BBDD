@@ -14,7 +14,7 @@ public class PanResumen extends JPanel {
 	private static final long serialVersionUID = 1L;
 	public JTextField txtNota;
 	public JLabel lblAsignatura;
-	private JButton btnCambiar, btnGuardar, btnAnterior, btnSiguiente, btnPrimero, btnUltimo;
+	public JButton btnCambiar, btnGuardar, btnAnterior, btnSiguiente, btnPrimero, btnUltimo;
 	private CtrlPanResumen ctrlResumen;
 	private Conexion con;
 
@@ -25,42 +25,43 @@ public class PanResumen extends JPanel {
 
 		lblAsignatura = new JLabel("Asignatura:");
 		lblAsignatura.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblAsignatura.setBounds(58, 88, 157, 30);
+		lblAsignatura.setBounds(150, 90, 157, 30);
 		add(lblAsignatura);
 
 		txtNota = new JTextField();
 		txtNota.setEditable(false);
-		txtNota.setBounds(225, 88, 157, 30);
+		txtNota.setBounds(317, 90, 157, 30);
 		add(txtNota);
 		txtNota.setColumns(10);
 
 		btnCambiar = new JButton("Cambiar nota");
-		btnCambiar.setBounds(160, 180, 120, 23);
+		btnCambiar.setBounds(250, 165, 120, 23);
 		add(btnCambiar);
 
 		btnGuardar = new JButton("Guardar");
 		btnGuardar.setEnabled(false);
 		btnGuardar.setVisible(false);
-		btnGuardar.setBounds(175, 146, 90, 23);
+		btnGuardar.setBounds(265, 131, 90, 23);
 		add(btnGuardar);
 
 		btnAnterior = new JButton("Anterior");
-		btnAnterior.setBounds(60, 180, 90, 23);
+		btnAnterior.setBounds(150, 165, 90, 23);
 		add(btnAnterior);
 
 		btnSiguiente = new JButton("Siguiente");
-		btnSiguiente.setBounds(290, 180, 90, 23);
+		btnSiguiente.setBounds(380, 165, 90, 23);
 		add(btnSiguiente);
 
 		btnPrimero = new JButton("Primero");
-		btnPrimero.setBounds(123, 210, 89, 23);
+		btnPrimero.setBounds(218, 195, 89, 23);
 		add(btnPrimero);
 
 		btnUltimo = new JButton("Último");
-		btnUltimo.setBounds(222, 210, 89, 23);
+		btnUltimo.setBounds(317, 195, 89, 23);
 		add(btnUltimo);
 
 		ctrlResumen = new CtrlPanResumen(this, con, alumn_id);
+		ctrlResumen.setData();
 
 		setListeners();
 	}
@@ -78,6 +79,12 @@ public class PanResumen extends JPanel {
 		});
 		btnSiguiente.addActionListener(e -> {
 			ctrlResumen.siguienteAsignatura();
+		});
+		btnUltimo.addActionListener(e -> {
+			ctrlResumen.ultimaAsignatura();
+		});
+		btnPrimero.addActionListener(e -> {
+			ctrlResumen.primeraAsignatura();
 		});
 	}
 

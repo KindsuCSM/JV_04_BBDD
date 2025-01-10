@@ -70,6 +70,10 @@ public class MenuBar implements ActionListener {
 	public void actualizarItems(JPanel panel){
 		panDetalle = panel;
 	}
+
+	public void actualizarResumen(JPanel panel) {
+		panResumen = panel;
+	}
 	
 	private void cambiarPanel(JPanel panelNuevo) {
 		frmPrincipal.getContentPane().removeAll();

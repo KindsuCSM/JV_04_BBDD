@@ -19,17 +19,13 @@ public class CtrlPanResumen {
 	public CtrlPanResumen(PanResumen panResumen, Conexion conexion, int id_alumn) {
 		this.conn = conexion;
 		this.panResumen = panResumen;
+        this.id_alumn = id_alumn;
 		this.asignaturas = getAsignaturas();
 		this.index = 0;
-        this.id_alumn = id_alumn;
-
-		if(!asignaturas.isEmpty()) {
-			setData();
-		}
 	}
 
 	public void cambiarNotaAsignatura() {
-		if (index >= 0 && index < asignaturas.size()) {
+        if (index >= 0 && index < asignaturas.size()) {
             Asignatura asignatura = asignaturas.get(index);
             double nuevaNota = Double.parseDouble(panResumen.txtNota.getText());
 
@@ -54,17 +50,24 @@ public class CtrlPanResumen {
 	}
 
 	public void setData(){
-		if(index > 0 && index < asignaturas.size()) {
+        if(index >= 0 && index < asignaturas.size()) {
 			Asignatura asignatura = asignaturas.get(index);
-            panResumen.lblAsignatura.setText("Asignatura: " + asignatura.getName());
+            panResumen.lblAsignatura.setText(asignatura.getName());
             panResumen.txtNota.setText(String.valueOf(asignatura.getScore()));
 		}
+        bloquearBotones();
 	}
+
+    private void bloquearBotones() {
+        panResumen.btnAnterior.setEnabled(index > 0);
+        panResumen.btnSiguiente.setEnabled(index < asignaturas.size() - 1);
+        panResumen.btnPrimero.setEnabled(index > 0);
+        panResumen.btnUltimo.setEnabled(index < asignaturas.size() - 1);
+    }
 
 	private ArrayList<Asignatura> getAsignaturas() {
 		ArrayList<Asignatura> lstAsignaturas = new ArrayList<>();
         String sql = "SELECT * FROM subject WHERE alumn_id = ?";
-
         try {
             PreparedStatement ps = conn.getConnection().prepareStatement(sql);
             ps.setInt(1, id_alumn);
@@ -81,6 +84,7 @@ public class CtrlPanResumen {
         } catch (SQLException e) {
             System.out.println("Error al obtener asignaturas: " + e.getMessage());
         }
+        System.out.println(lstAsignaturas.size());
         return lstAsignaturas;
 	}
 	public void siguienteAsignatura() {
@@ -94,5 +98,14 @@ public class CtrlPanResumen {
             index--;
             setData();
         }
+    }
+
+    public void primeraAsignatura() {
+        index = 1;
+        setData();
+    }
+    public void ultimaAsignatura() {
+        index = asignaturas.size() - 1;
+        setData();
     }
 }
