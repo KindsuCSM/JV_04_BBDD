@@ -5,6 +5,9 @@ import view.FrmPrincipal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import view.PanDetalle;
 
 import javax.swing.*;
 
@@ -13,6 +16,7 @@ public class CtrlPanEntrar {
 	private String contrasenia;
 	private Integer alumn_id;
 	private Conexion con;
+	private PanDetalle PanDetalle;
 
 	public boolean accesoUsuario(Conexion conn, String user, String pass, FrmPrincipal frmPrincipal) {
 		this.con = conn;
@@ -54,9 +58,17 @@ public class CtrlPanEntrar {
         return false;
     }
 
+	public void actualizarPaneles(FrmPrincipal frmPrincipal) throws SQLException {
+
+		frmPrincipal.actualizarMenu(alumn_id);
+
+
+	}
+
 	public Integer getAlumn_id() {
 		return alumn_id;
 	}
+
 	public String getUsuario() {
 		System.out.println("Usuario actual: " + usuario);
 		return usuario;

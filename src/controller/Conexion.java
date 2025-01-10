@@ -3,17 +3,18 @@ package controller;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Conexion {
-	private String bd = "gestor_alumno_asignatura";
-	private String url = "jdbc:mysql://localhost:3306/";
-	private String user = "root";
-	private String password = "";
-	private String driver = "com.mysql.cj.jdbc.Driver";
-	private Connection conn;
+	private static String bd = "gestor_alumno_asignatura";
+	private static String url = "jdbc:mysql://localhost:3306/";
+	private static String user = "root";
+	private static String password = "";
+	private static String driver = "com.mysql.cj.jdbc.Driver";
+	private static Connection conn;
 
 	public Conexion() {}
-	public Connection conectar() {
+	public static Connection conectar() {
 		try {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url + bd, user, password);
@@ -35,7 +36,13 @@ public class Conexion {
 		}
 	}
 
+	public static Statement obtenerStatementResumen() throws SQLException {
+		return conectar().createStatement();
+	}
+
 	public Connection getConnection() {
 		return conn;
 	}
+
+
 }

@@ -1,11 +1,15 @@
 package view;
 
+import controller.CtrlPanDetalle;
+import model.Alumno;
 import model.Asignatura;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.IconView;
 import java.awt.*;
 import java.io.Serial;
+import java.sql.SQLException;
 
 public class PanDetalle extends JPanel {
 
@@ -17,11 +21,12 @@ public class PanDetalle extends JPanel {
 	private JLabel imagenLabel;
 	private JList<String> asignaturasList;
 	private JButton calcularMediaButton;
+	private CtrlPanDetalle ctrlPanDetalle;
 
 	@Serial
     private static final long serialVersionUID = 1L;
 	
-	public PanDetalle() {
+	public PanDetalle(int alumn_id) throws SQLException {
 		setLayout(new BorderLayout());
 		setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.GRAY),
 				"Información del Alumno", TitledBorder.LEADING, TitledBorder.TOP, new Font("Arial", Font.BOLD, 14)));
@@ -93,16 +98,19 @@ public class PanDetalle extends JPanel {
 		mainPanel.add(asignaturasPanel);
 
 		add(mainPanel, BorderLayout.CENTER);
+
+		ctrlPanDetalle = new CtrlPanDetalle();
+		setAlumnoData(ctrlPanDetalle.actualizarDatos(alumn_id));
 	}
 
 	// Métodos para actualizar la información del panel
-	public void setAlumnoData(int numero, String usuario, String contraseña, String fechaNacimiento, float notaMedia, ImageIcon imagen) {
-		numeroField.setText(String.valueOf(numero));
-		usuarioField.setText(usuario);
-		contraseñaField.setText(contraseña);
-		fechaNacimientoField.setText(fechaNacimiento);
-		notaMediaField.setText(String.valueOf(notaMedia));
-		imagenLabel.setIcon(imagen);
+	public void setAlumnoData(Alumno alumno) {
+		numeroField.setText(String.valueOf(alumno.getAlumn_id()));
+		usuarioField.setText(alumno.getUser());
+		contraseñaField.setText(alumno.getPassword());
+		fechaNacimientoField.setText(alumno.getBirthday_date().toString());
+		notaMediaField.setText(String.valueOf(alumno.getAverage_score()));
+		imagenLabel.setIcon((Icon)alumno.getPhoto());
 	}
 
 //	public void setAsignaturasData(List asignaturas) {

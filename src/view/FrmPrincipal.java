@@ -4,6 +4,7 @@ import controller.Conexion;
 import controller.CtrlPanEntrar;
 
 import java.awt.*;
+import java.sql.SQLException;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -20,7 +21,7 @@ public class FrmPrincipal extends JFrame {
     private MenuBar mnBar;
 	Conexion conn;
 
-	public FrmPrincipal() {
+	public FrmPrincipal() throws SQLException {
 		conn = new Conexion();
 		conn.conectar();
 
@@ -36,7 +37,7 @@ public class FrmPrincipal extends JFrame {
 
 		panInicio = new JPanel();
 		panInicio.add(new JLabel("Inicia sesion para empezar..."));
-		panDetalle = new PanDetalle();
+		//panDetalle = new PanDetalle();
 		panEntrar = new PanEntrar(conn);
 		panResumen = new PanResumen(conn);
 
@@ -59,5 +60,10 @@ public class FrmPrincipal extends JFrame {
 
 	public void activarBotones() {
 		mnBar.activarBotones();
+	}
+
+	public void actualizarMenu(int alumn_id) throws SQLException {
+		panDetalle = new PanDetalle(alumn_id);
+		mnBar.actualizarItems(panDetalle);
 	}
 }

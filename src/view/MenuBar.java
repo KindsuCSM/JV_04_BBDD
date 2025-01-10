@@ -67,6 +67,10 @@ public class MenuBar implements ActionListener {
 		mnVisualizar.setEnabled(true);
 	}
 
+	public void actualizarItems(JPanel panel){
+		panDetalle = panel;
+	}
+	
 	private void cambiarPanel(JPanel panelNuevo) {
 		frmPrincipal.getContentPane().removeAll();
 		frmPrincipal.getContentPane().add(panelNuevo, BorderLayout.CENTER);

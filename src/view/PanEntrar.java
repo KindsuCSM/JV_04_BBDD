@@ -3,9 +3,11 @@ package view;
 import javax.swing.*;
 
 import controller.Conexion;
+import controller.CtrlPanDetalle;
 import controller.CtrlPanEntrar;
 
 import java.awt.Font;
+import java.sql.SQLException;
 
 public class PanEntrar extends JPanel {
 
@@ -15,6 +17,7 @@ public class PanEntrar extends JPanel {
 	private JLabel lblUsuario, lblContrasenia;
 	private JButton btnCancelar, btnAceptar;
 	private CtrlPanEntrar ctrlPanelEntrar;
+	private CtrlPanDetalle ctrlPanDetalle;
 	private Conexion conexion;
 
 	public PanEntrar(Conexion conn) {
@@ -64,9 +67,14 @@ public class PanEntrar extends JPanel {
 
 			ctrlPanelEntrar = new CtrlPanEntrar();
 			boolean accesoCorrecto = ctrlPanelEntrar.accesoUsuario(conexion, user, contrasenia, (FrmPrincipal) SwingUtilities.getWindowAncestor(this));
-
 			if(accesoCorrecto){
-				borrarCampos();
+                try {
+                    ctrlPanelEntrar.actualizarPaneles((FrmPrincipal) SwingUtilities.getWindowAncestor(this));
+                } catch (SQLException ex) {
+					System.out.println("No actualiza paneles");
+                    throw new RuntimeException(ex);
+                }
+                borrarCampos();
 			}
 		});
 	}

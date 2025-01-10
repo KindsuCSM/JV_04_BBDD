@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Image;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Alumno {
@@ -15,7 +16,7 @@ public class Alumno {
 
 	}
 
-	public Alumno(Integer alumn_id, String user, String password, GregorianCalendar birthday_date, Double average_score,
+	public Alumno(Integer alumn_id, String user, String password, Date birthday_date, Double average_score,
 			Image photo) {
 		setUser(user);
 		setPassword(password);
@@ -47,8 +48,15 @@ public class Alumno {
 	public GregorianCalendar getBirthday_date() {
 		return birthday_date;
 	}
-	public void setBirthday_date(GregorianCalendar birthday_date) {
-		this.birthday_date = birthday_date;
+	public void setBirthday_date(Date birthday_date) {
+		if(birthday_date == null) {
+			this.birthday_date = new GregorianCalendar();
+		}else{
+			GregorianCalendar calendar = new GregorianCalendar();
+			calendar.setTime(birthday_date);
+			this.birthday_date = calendar;
+		}
+
 	}
 	public Double getAverage_score() {
 		return average_score;
