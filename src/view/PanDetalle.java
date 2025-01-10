@@ -58,8 +58,10 @@ public class PanDetalle extends JPanel {
 
 		// Imagen del Alumno
 		imagenLabel = new JLabel();
-		imagenLabel.setPreferredSize(new Dimension(70, 100));
+		imagenLabel.setPreferredSize(new Dimension(20, 100));
 		imagenLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		imagenLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		imagenLabel.setVerticalAlignment(SwingConstants.CENTER);
 		datosPanel.add(imagenLabel);
 
 		mainPanel.add(datosPanel);
@@ -211,8 +213,22 @@ public class PanDetalle extends JPanel {
 		double notaMedia = alumno.getAverage_score();
 		notaMediaField.setText(String.valueOf(notaMedia));
 
+		ImageIcon originalIcon;
+
+		if(alumno.getPhoto() != null) {
+			originalIcon = new ImageIcon(PanDetalle.class.getResource(alumno.getPhoto()));
+		}else{
+			originalIcon = new ImageIcon(PanDetalle.class.getResource("/imagenes/ejemplo.png"));
+		}
+
+
 		// Establecer foto
-		imagenLabel.setIcon((Icon)alumno.getPhoto());
+		Image scaledImage = originalIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+		ImageIcon scaledIcon = new ImageIcon(scaledImage);
+
+		// Establecer la imagen escalada en el JLabel
+		imagenLabel.setIcon(scaledIcon);
+
 
 		// Asignaturas
 		ctrlPanDetalle.setAsignaturasData(alumno.getAlumn_id());

@@ -10,14 +10,14 @@ public class Alumno {
 	private String password;
 	private GregorianCalendar birthday_date;
 	private Double average_score;
-	private Image photo;
+	private String photo;
 
 	public Alumno() {
 
 	}
 
 	public Alumno(Integer alumn_id, String user, String password, Date birthday_date, Double average_score,
-			Image photo) {
+			String photo) {
 		setUser(user);
 		setPassword(password);
 		setBirthday_date(birthday_date);
@@ -64,10 +64,10 @@ public class Alumno {
 	public void setAverage_score(Double average_score) {
 		this.average_score = average_score;
 	}
-	public Image getPhoto() {
+	public String getPhoto() {
 		return photo;
 	}
-	public void setPhoto(Image photo) {
+	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
 

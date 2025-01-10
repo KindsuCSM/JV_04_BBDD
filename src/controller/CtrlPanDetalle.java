@@ -31,6 +31,7 @@ public class CtrlPanDetalle {
                 alumno.setPassword(rs.getString("password"));
                 alumno.setBirthday_date(rs.getDate("birthday_date"));
                 alumno.setAverage_score(rs.getDouble("average_score"));
+                alumno.setPhoto(rs.getString("photo"));
 
                 System.out.println("Alumno cargado: " + alumno.getUser());
                 return alumno;
